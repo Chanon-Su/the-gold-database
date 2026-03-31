@@ -1,0 +1,1 @@
+betabase\Scripts\activate.bat
