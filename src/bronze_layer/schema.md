@@ -1,25 +1,23 @@
 Table bronze_yfinance_gold {
-  id BIGSERIAL PRIMARY KEY ไอดี
-
-  symbol TEXT สัญลักษณ์ UAXUSD
-  datetime TIMESTAMPTZ วันเวลาของแท่งเทียน
-  open DOUBLE PRECISION ราคาเปิดของแท่งเทียน
-  high DOUBLE PRECISION ราคาสูงสุดของแท่งเทียน
-  low DOUBLE PRECISION ราคาต่ำสุดของแท่งเทียน
-  close DOUBLE PRECISION ราคาปิดของแท่งเทียน
-  volume BIGINT ปริมาณ
-  dividends DOUBLE PRECISION
-  stock_splits DOUBLE PRECISION
-
-  source TEXT DEFAULT 'yfinance' ดึงข้อมูลมาจากไหน 'yfinacnce'
-  ingested_at TIMESTAMPTZ DEFAULT NOW() วันเวลาที่ดึงข้อมูลชุดนี้
-  batch_id TEXT เลขระบุ ครั้งที่ดึงข้อมูล
+id,BIGSERIAL,PRIMARY KEY,ไอดีรันอัตโนมัติประจำแถว (Unique ID)
+symbol,TEXT,NOT NULL,สัญลักษณ์ตั๋ว เช่น 'GC=F'
+datetime,TIMESTAMPTZ,NOT NULL,วันเวลาของแท่งเทียน (Market Timezone)
+open,DOUBLE PRECISION,-,ราคาเปิด (Open Price)
+high,DOUBLE PRECISION,-,ราคาสูงสุด (High Price)
+low,DOUBLE PRECISION,-,ราคาต่ำสุด (Low Price)
+close,DOUBLE PRECISION,-,ราคาปิด (Close Price)
+volume,BIGINT,-,ปริมาณการซื้อขาย (Volume)
+dividends,DOUBLE PRECISION,-,เงินปันผล (Dividends)
+stock_splits,DOUBLE PRECISION,-,การแตกหุ้น (Stock Splits)
+source,TEXT,DEFAULT 'yfinance',แหล่งที่มาของข้อมูล
+ingested_at,TIMESTAMPTZ,DEFAULT NOW(),วันเวลาที่ข้อมูลถูกนำเข้าระบบ (System Time)
+batch_id,TEXT,-,ID ระบุรอบการดึงข้อมูล (For Idempotency & Audit)
 }
 
 Bronze = Raw Data Zone
 ต้อง:
-เก็บ “ข้อมูลดิบที่สุด”
-ห้ามแก้ไข เพื่อให้คงไว้ความดังเดิมไว้ debug ย้อนหลังได้, เพิ่มได้อย่างเดียว
+เก็บ “ข้อมูลดิบที่สุด” + useable
+ห้ามแก้ไข เพื่อให้คงไว้ความดังเดิมไว้ debug ย้อนหลังได้, เพิ่มได้อย่างเดียว และ datatype ที่เหมาะสมก่อน save to database
 รองรับ schema change เผื่อไว้
 ขั้นตอนคือ
 1. Extract

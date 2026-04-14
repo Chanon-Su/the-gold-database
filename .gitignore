@@ -214,3 +214,7 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+gold_10y.csv
+test.py
+docker-compose.yml
+reports/2026-04-12_dataset_profile.md

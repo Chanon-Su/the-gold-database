@@ -6,6 +6,8 @@ import os
 from dotenv import load_dotenv # import env
 load_dotenv()
 
+
+
 # --- connect zone ---
 print(f"connect to PostgreSQL...")
 
@@ -19,6 +21,7 @@ conn = psycopg2.connect(
 )
 cursor = conn.cursor() # start conn
 
+# 2. insert table (prepare: sql command)
 table_name = "bronze_yfinance_gold"
 
 command_sql = f"""
@@ -40,10 +43,12 @@ ingested_at TIMESTAMPTZ DEFAULT NOW() วันเวลาที่ดึงข
 batch_id TEXT เลขระบุ ครั้งที่ดึงข้อมูล
 """
 
+# 3. insert table (execute: sql command)
 execute_batch(cursor, command_sql)
 conn.commit() 
-print(f"Created database")
+print(f"Created {table_name} on database")
 # --- END: connect zone ---
+
 
 
 # --- Validate zone ---
@@ -53,7 +58,9 @@ conn.commit()
 print(f"Check the table")
 # --- END: Validate zone ---
 
-# --- closing ---
+
+
+# --- closing conn ---
 cursor.close()
 conn.close()
 # --- END: closing conn ---
