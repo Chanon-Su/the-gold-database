@@ -2,3 +2,4 @@ yfinance
 psycopg2
 pandas
 python-dotenv
+sqlalchemy

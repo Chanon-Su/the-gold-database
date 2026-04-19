@@ -218,3 +218,5 @@ gold_10y.csv
 test.py
 docker-compose.yml
 reports/2026-04-12_dataset_profile.md
+config/image.png
+readme.txt

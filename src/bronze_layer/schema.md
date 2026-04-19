@@ -1,5 +1,5 @@
 Table bronze_yfinance_gold {
-id,BIGSERIAL,PRIMARY KEY,ไอดีรันอัตโนมัติประจำแถว (Unique ID)
+id,BIGSERIAL,PRIMARY KEY,ไอดีรันอัตโนมัติประจำแถว (Unique ID) (ไม่ ingest postgreSQL ทำให้เอง๗
 symbol,TEXT,NOT NULL,สัญลักษณ์ตั๋ว เช่น 'GC=F'
 datetime,TIMESTAMPTZ,NOT NULL,วันเวลาของแท่งเทียน (Market Timezone)
 open,DOUBLE PRECISION,-,ราคาเปิด (Open Price)
