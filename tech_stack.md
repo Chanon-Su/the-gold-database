@@ -17,3 +17,5 @@
 ## 5. AI Assistant
 - Gemini : ช่วย support และ แนะนำ การปรับปรุง code
 - Claude : ใช้วาง tech-stack และ work_flow
+
+## (Optional) Airflow
