@@ -69,7 +69,8 @@ class DatabaseManager:
 
 # db.close_conn()
 
-def load_to_bronze(df: pd.DataFrame, table_name: str, db_manager):
+def db_load(df: pd.DataFrame, schema_table_name: str, db_manager):
+    # schema = "bronze_layer"
     if df.empty:
         print("No data to load.")
         return
@@ -80,7 +81,7 @@ def load_to_bronze(df: pd.DataFrame, table_name: str, db_manager):
     column_names = ", ".join(columns)
     placeholders = ", ".join(["%s"] * len(columns))
     
-    sql = f"INSERT INTO {table_name} ({column_names}) VALUES ({placeholders})"
+    sql = f"INSERT INTO {schema_table_name} ({column_names}) VALUES ({placeholders})"
 
     # 2. แปลง DataFrame เป็น List of Tuples
     # เช่น [('GC=F', '2026-04-18', 2300.5), (...)]
@@ -91,7 +92,7 @@ def load_to_bronze(df: pd.DataFrame, table_name: str, db_manager):
         # ใช้ cursor จาก DatabaseManager ที่เราทำไว้
         execute_batch(db_manager.cursor, sql, data_values)
         db_manager.conn.commit()
-        print(f"Successfully loaded {len(df)} rows to {table_name}")
+        print(f"Successfully loaded {len(df)} rows to {schema_table_name}")
     except Exception as e:
         db_manager.conn.rollback()
         print(f"Failed to load data: {e}")

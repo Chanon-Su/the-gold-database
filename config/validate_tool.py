@@ -124,16 +124,16 @@ import pandas as pd
 
 
 
-def post_validate(df_loaded: pd.DataFrame, batch_id: str, table: str, db: DatabaseManager):
+def post_validate(df_loaded: pd.DataFrame, ingested_batch_id: str, table: str, db: DatabaseManager):
     print("--- Starting Post-validation ---")
-    # 1.Volume len(df)ที่เข้าไป และ df ที่อยู่บน database เท่ากัน (เช็คจาก batch_id เดียวกัน)
+    # 1.Volume len(df)ที่เข้าไป และ df ที่อยู่บน database เท่ากัน (เช็คจาก ingested_batch_id เดียวกัน)
     # 2.completness ข้อมูลที่เข้าไป มี null เท่ากับก่อนเข้ามัย้้?
     # 3.Match data ข้อมูลที่เข้าไปคือชุดเดียวกับ df ที่ต้องการเข้ามั้ย? หยิบ 10% มาเปรียบเทียบทั้ง row
     
     # ดึงข้อมูลจริงจาก Database ของ Batch นี้ขึ้นมาเป็น DataFrame เพื่อใช้ตรวจสอบ
     cols_to_select = ", ".join(df_loaded.columns) # select * without id
-    sql_get_data = f"SELECT {cols_to_select} FROM {table} WHERE batch_id = %s"
-    raw_data = db.execute_query(sql_get_data, (batch_id,)) #แปลง เป็น dataframe
+    sql_get_data = f"SELECT {cols_to_select} FROM {table} WHERE ingested_batch_id = %s"
+    raw_data = db.execute_query(sql_get_data, (ingested_batch_id,)) #แปลง เป็น dataframe
     
     if not raw_data:
         print("Post-validate: No data found in database for this batch ❌")
@@ -141,7 +141,7 @@ def post_validate(df_loaded: pd.DataFrame, batch_id: str, table: str, db: Databa
     # แปลง List of Tuples เป็น DataFrame (ต้องดึงชื่อคอลัมน์มาให้ตรงกับ df_loaded ด้วย)
     df_database = pd.DataFrame(raw_data, columns=df_loaded.columns)
 
-    # 1.Volume len(df)ที่เข้าไป และ df ที่อยู่บน database เท่ากัน (เช็คจาก batch_id เดียวกัน)
+    # 1.Volume len(df)ที่เข้าไป และ df ที่อยู่บน database เท่ากัน (เช็คจาก ingested_batch_id เดียวกัน)
     if len(df_database) == len(df_loaded):
         print("Post validate: Volume Pass✅✅✅")
     else: 

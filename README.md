@@ -13,5 +13,4 @@
 0. setup tech stack (ทำไมถึงเรื่อง postgreSQL สำหรับงานนี้?) [tech_stack.md](tech_stack.md)
 1. การวาง workflow ของการทำงาน ตั้งแต่ต้นน้ำถึงปลายน้ำ [plan_workflow.md](plan.md)
 2. Validate tool ฟังชั่นสำหรับการ validate ข้อมูล ที่ประยุกต์การใช้ความรู้เกี่ยวกับ data fundamental [validate_tool.md.md](config\validate_tool.md)
-
-
+3. discord alert สำหรับแจ้งเตือนถึงผลลัพท์
