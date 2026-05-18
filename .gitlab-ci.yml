@@ -1,0 +1,8 @@
+stages:
+  - test
+
+test_connection:
+  stage: test
+  image: alpine:latest
+  script:
+    - echo "Hello from GitHub! GitLab CI/CD is working smoothly."
